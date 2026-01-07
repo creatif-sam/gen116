@@ -143,6 +143,12 @@ function ClientDashboardContent() {
                   📋 View All Requests
                 </Link>
                 <Link
+                  href="/dashboard/client/profile"
+                  className="block w-full py-3 bg-purple-900/30 border border-purple-500/30 rounded-lg font-semibold text-center hover:bg-purple-900/40 transition-all"
+                >
+                  👤 Edit Profile
+                </Link>
+                <Link
                   href="/dashboard/client/uploads"
                   className="block w-full py-3 bg-purple-900/30 border border-purple-500/30 rounded-lg font-semibold text-center hover:bg-purple-900/40 transition-all"
                 >
