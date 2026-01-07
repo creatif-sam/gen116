@@ -27,8 +27,8 @@ export default function Navbar() {
   const navItems = [
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/#services' },
-    { name: 'About', href: '/#about' },
-    { name: 'Portfolio', href: '/#portfolio' },
+    { name: 'About', href: '/about' },
+    { name: 'Portfolio', href: '/portfolio' },
     { name: 'Contact', href: '/contact' },
     ...(isAuthenticated ? [{ name: `${user?.role} Dashboard`, href: `/dashboard/${user?.role}` }] : [{ name: 'Dashboard', href: '/dashboard' }]),
   ];

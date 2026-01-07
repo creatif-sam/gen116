@@ -95,18 +95,6 @@ export default function DashboardLoginPage() {
               </p>
             </div>
           </div>
-
-          {/* Info Cards */}
-          <div className="mt-6 grid grid-cols-2 gap-3 text-xs">
-            <div className="bg-purple-900/20 rounded-lg p-3 border border-purple-500/20">
-              <p className="text-purple-400 font-semibold mb-1">Client</p>
-              <p className="text-gray-400">Submit & track requests</p>
-            </div>
-            <div className="bg-blue-900/20 rounded-lg p-3 border border-blue-500/20">
-              <p className="text-blue-400 font-semibold mb-1">Staff</p>
-              <p className="text-gray-400">Manage client requests</p>
-            </div>
-          </div>
         </div>
       </div>
 

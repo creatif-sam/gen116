@@ -17,7 +17,7 @@ export default function TestConnectionPage() {
   const testConnection = async () => {
     try {
       // Test 1: Check Supabase connection
-      const { data, error: connError } = await supabase.from('users').select('count');
+      const { data, error: connError } = await supabase.from('profiles').select('count');
       
       if (connError) {
         setConnectionStatus('error');

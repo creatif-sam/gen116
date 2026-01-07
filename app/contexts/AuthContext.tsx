@@ -84,7 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       console.log('Starting signup process...', { email, name, role });
       
-      // Sign up with Supabase Auth with user metadata
+      // Sign up with Supabase Auth - profile will be auto-created by trigger
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
@@ -109,28 +109,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       console.log('Auth user created:', authData.user.id);
 
-      // Create user profile in our database with auth_id
-      const { data: newUser, error: dbError } = await userAPI.createUser({
-        auth_id: authData.user.id,
-        email,
-        name,
-        role,
-      });
+      // Wait a moment for trigger to complete
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-      console.log('Database user creation:', { newUser, dbError });
+      // Fetch the created profile
+      const { data: newUser, error: dbError } = await userAPI.getUserByEmail(email);
 
-      if (dbError) {
-        console.error('Database error details:', {
-          message: dbError.message,
-          details: dbError.details,
-          hint: dbError.hint,
-          code: dbError.code,
-          error: dbError,
+      console.log('Profile fetch:', { newUser, dbError });
+
+      if (dbError || !newUser) {
+        console.error('Profile fetch error:', dbError);
+        // Profile might not be created yet, but auth succeeded
+        // Set minimal user data
+        setUser({
+          id: authData.user.id,
+          name: name,
+          email: email,
+          role: role as UserRole,
+          avatar: null,
+          company: null,
+          phone: null,
         });
-        throw new Error(`Database error: ${dbError.message || dbError.details || 'Failed to create user profile'}`);
-      }
-
-      if (newUser) {
+        console.log('User state updated with auth data');
+      } else {
         setUser({
           id: newUser.id,
           name: newUser.name,

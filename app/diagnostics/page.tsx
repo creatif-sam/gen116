@@ -40,7 +40,7 @@ export default function DiagnosticsPage() {
 
     // Test connection
     try {
-      const { data, error } = await supabase.from('users').select('count').limit(1);
+      const { data, error } = await supabase.from('profiles').select('count').limit(1);
       setDiagnostics((prev: any) => ({
         ...prev,
         connection: {

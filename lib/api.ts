@@ -5,7 +5,7 @@ export const userAPI = {
   // Get user by email
   async getUserByEmail(email: string) {
     const { data, error } = await supabase
-      .from('users')
+      .from('profiles')
       .select('*')
       .eq('email', email)
       .single();
@@ -16,7 +16,7 @@ export const userAPI = {
   // Create new user
   async createUser(userData: any) {
     const { data, error } = await supabase
-      .from('users')
+      .from('profiles')
       .insert(userData)
       .select()
       .single();
@@ -27,7 +27,7 @@ export const userAPI = {
   // Get all users (admin only)
   async getAllUsers() {
     const { data, error } = await supabase
-      .from('users')
+      .from('profiles')
       .select('*')
       .order('created_at', { ascending: false });
     
@@ -37,7 +37,7 @@ export const userAPI = {
   // Get users by role
   async getUsersByRole(role: string) {
     const { data, error } = await supabase
-      .from('users')
+      .from('profiles')
       .select('*')
       .eq('role', role);
     
@@ -276,14 +276,14 @@ export const analyticsAPI = {
     // Total clients (admin/staff only)
     if (role === 'admin' || role === 'staff') {
       const { count: clientCount } = await supabase
-        .from('users')
+        .from('profiles')
         .select('*', { count: 'exact', head: true })
         .eq('role', 'client');
       stats.totalClients = clientCount || 0;
       
       // Total staff
       const { count: staffCount } = await supabase
-        .from('users')
+        .from('profiles')
         .select('*', { count: 'exact', head: true })
         .eq('role', 'staff');
       stats.totalStaff = staffCount || 0;
