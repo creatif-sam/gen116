@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/app/contexts/AuthContext';
+import LoadingSpinner from '@/app/components/LoadingSpinner';
 import { getProjectBySlug, createProject, updateProject } from '@/lib/portfolio-api';
 
 export default function ProjectEditorPage() {
@@ -120,10 +121,7 @@ export default function ProjectEditorPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[var(--background)] flex items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent"></div>
-          <p className="text-gray-400 mt-4">Loading project...</p>
-        </div>
+        <LoadingSpinner message="Loading project..." />
       </div>
     );
   }

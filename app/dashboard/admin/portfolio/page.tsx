@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/app/contexts/AuthContext';
+import LoadingSpinner from '@/app/components/LoadingSpinner';
 import { getProjects, getCaseStudies, getPortfolioStats, getActivityLogs } from '@/lib/portfolio-api';
 
 export default function PortfolioDashboardPage() {
@@ -76,10 +77,7 @@ export default function PortfolioDashboardPage() {
         </div>
 
         {loading ? (
-          <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent"></div>
-            <p className="text-gray-400 mt-4">Loading dashboard...</p>
-          </div>
+          <LoadingSpinner message="Loading dashboard..." />
         ) : (
           <>
             {/* Quick Stats */}

@@ -424,6 +424,74 @@ export default function CaseStudyDetailPage() {
         </div>
       </section>
 
+      {/* Project Brief Section */}
+      <section className="py-16 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold mb-8 text-center">
+            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              Project Brief
+            </span>
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <div className="p-6 bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-xl border border-purple-500/20">
+              <div className="text-purple-400 font-semibold mb-2 flex items-center gap-2">
+                <span>💼</span>
+                Project Scope
+              </div>
+              <p className="text-gray-300">
+                {study.projectScope || 'Comprehensive digital transformation covering all aspects of operations, from customer experience to backend infrastructure.'}
+              </p>
+            </div>
+            
+            <div className="p-6 bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-xl border border-purple-500/20">
+              <div className="text-purple-400 font-semibold mb-2 flex items-center gap-2">
+                <span>💰</span>
+                Budget Range
+              </div>
+              <p className="text-white text-2xl font-bold">
+                {study.budgetRange || '$500K - $1M'}
+              </p>
+            </div>
+            
+            <div className="p-6 bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-xl border border-purple-500/20">
+              <div className="text-purple-400 font-semibold mb-2 flex items-center gap-2">
+                <span>👥</span>
+                Team Size
+              </div>
+              <p className="text-white text-2xl font-bold">
+                {study.teamSize || '8-12 consultants'}
+              </p>
+            </div>
+          </div>
+
+          {/* Key Deliverables */}
+          <div className="p-8 bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-xl border border-purple-500/20">
+            <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
+              <span>📦</span>
+              Key Deliverables
+            </h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              {(study.deliverables || [
+                'Digital transformation roadmap',
+                'Cloud migration strategy',
+                'New e-commerce platform',
+                'AI recommendation system',
+                'Staff training program',
+                'Implementation documentation',
+                'Post-launch support plan',
+                'Performance monitoring dashboard'
+              ]).map((deliverable: string, index: number) => (
+                <div key={index} className="flex items-start gap-3 p-3 bg-purple-900/10 rounded-lg">
+                  <span className="text-green-400 mt-1">✓</span>
+                  <span className="text-gray-300">{deliverable}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Challenge Section */}
       <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto">

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/app/contexts/AuthContext';
 import { getCaseStudyBySlug, createCaseStudy, updateCaseStudy } from '@/lib/portfolio-api';
 import Breadcrumb from '@/app/components/Breadcrumb';
+import LoadingSpinner from '@/app/components/LoadingSpinner';
 
 export default function CaseStudyEditorPage() {
   const { user } = useAuth();
@@ -38,6 +39,10 @@ export default function CaseStudyEditorPage() {
     testimonial_author: '',
     testimonial_role: '',
     published: false,
+    project_scope: '',
+    budget_range: '',
+    team_size: '',
+    deliverables: '',
   });
 
   useEffect(() => {
@@ -70,6 +75,10 @@ export default function CaseStudyEditorPage() {
         testimonial_author: data.testimonial_author || '',
         testimonial_role: data.testimonial_role || '',
         published: data.published || false,
+        project_scope: data.project_scope || '',
+        budget_range: data.budget_range || '',
+        team_size: data.team_size || '',
+        deliverables: Array.isArray(data.deliverables) ? data.deliverables.join('\n') : '',
       });
     }
     setLoading(false);
@@ -85,6 +94,7 @@ export default function CaseStudyEditorPage() {
       approach: formData.approach.split('\n').filter(Boolean),
       results: formData.results.split('\n').filter(Boolean),
       metrics: formData.metrics.split('\n').filter(Boolean),
+      deliverables: formData.deliverables.split('\n').filter(Boolean),
     };
 
     if (isNew) {
@@ -130,10 +140,7 @@ export default function CaseStudyEditorPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[var(--background)] flex items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent"></div>
-          <p className="text-gray-400 mt-4">Loading case study...</p>
-        </div>
+        <LoadingSpinner message="Loading case study..." />
       </div>
     );
   }
@@ -275,6 +282,63 @@ export default function CaseStudyEditorPage() {
                   placeholder="A comprehensive digital transformation project that modernized patient care delivery..."
                   className="w-full px-4 py-3 bg-black/40 border border-purple-500/20 rounded-lg text-white focus:border-purple-500/40 focus:outline-none"
                 />
+              </div>
+            </div>
+
+            {/* Project Brief */}
+            <div className="p-6 bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-2xl border border-purple-500/20">
+              <h2 className="text-2xl font-bold mb-6 text-purple-400">Project Brief</h2>
+              
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-gray-300">Project Scope</label>
+                  <textarea
+                    name="project_scope"
+                    value={formData.project_scope}
+                    onChange={handleChange}
+                    rows={4}
+                    placeholder="Define the overall scope of the project, key areas covered, and boundaries..."
+                    className="w-full px-4 py-3 bg-black/40 border border-purple-500/20 rounded-lg text-white focus:border-purple-500/40 focus:outline-none"
+                  />
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-gray-300">Budget Range</label>
+                    <input
+                      type="text"
+                      name="budget_range"
+                      value={formData.budget_range}
+                      onChange={handleChange}
+                      placeholder="$50,000 - $100,000"
+                      className="w-full px-4 py-3 bg-black/40 border border-purple-500/20 rounded-lg text-white focus:border-purple-500/40 focus:outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-gray-300">Team Size</label>
+                    <input
+                      type="text"
+                      name="team_size"
+                      value={formData.team_size}
+                      onChange={handleChange}
+                      placeholder="5-8 consultants"
+                      className="w-full px-4 py-3 bg-black/40 border border-purple-500/20 rounded-lg text-white focus:border-purple-500/40 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-gray-300">Key Deliverables (one per line)</label>
+                  <textarea
+                    name="deliverables"
+                    value={formData.deliverables}
+                    onChange={handleChange}
+                    rows={6}
+                    placeholder="Digital transformation roadmap&#10;Cloud migration strategy&#10;Staff training program&#10;Implementation documentation&#10;Post-launch support plan"
+                    className="w-full px-4 py-3 bg-black/40 border border-purple-500/20 rounded-lg text-white focus:border-purple-500/40 focus:outline-none"
+                  />
+                </div>
               </div>
             </div>
 

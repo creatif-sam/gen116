@@ -7,6 +7,7 @@ import { useAuth } from '@/app/contexts/AuthContext';
 import AuthGuard from '@/app/components/AuthGuard';
 import DashboardSidebar from '@/app/components/DashboardSidebar';
 import Breadcrumb from '@/app/components/Breadcrumb';
+import LoadingSpinner from '@/app/components/LoadingSpinner';
 import { supabase } from '@/lib/supabase';
 
 interface DashboardStats {
@@ -110,10 +111,7 @@ function AdminDashboardContent() {
         </div>
 
         {loading ? (
-          <div className="text-center py-12">
-            <div className="inline-block w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
-            <p className="text-gray-400 mt-4">Loading dashboard...</p>
-          </div>
+          <LoadingSpinner message="Loading dashboard..." />
         ) : (
           <>
             {/* Stats Grid */}

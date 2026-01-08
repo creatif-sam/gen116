@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useAuth } from '@/app/contexts/AuthContext';
 import { getCaseStudies, deleteCaseStudy, toggleCaseStudyPublish } from '@/lib/portfolio-api';
 import Breadcrumb from '@/app/components/Breadcrumb';
+import LoadingSpinner from '@/app/components/LoadingSpinner';
 
 interface CaseStudy {
   id: string;
@@ -140,10 +141,7 @@ export default function AdminCaseStudiesPage() {
 
         {/* Case Studies List */}
         {loading ? (
-          <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent"></div>
-            <p className="text-gray-400 mt-4">Loading case studies...</p>
-          </div>
+          <LoadingSpinner message="Loading case studies..." />
         ) : filteredCaseStudies.length === 0 ? (
           <div className="text-center py-20 bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-2xl border border-purple-500/20">
             <p className="text-gray-400 text-lg mb-4">No case studies found</p>

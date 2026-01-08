@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
+import LoadingSpinner from '../../../components/LoadingSpinner';
 import { getProjectBySlug } from '../../../../lib/portfolio-api';
 
 export default function ProjectDetailPage() {
@@ -32,10 +33,7 @@ export default function ProjectDetailPage() {
       <div className="min-h-screen bg-[var(--background)]">
         <Navbar />
         <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent"></div>
-            <p className="text-gray-400 mt-4">Loading project...</p>
-          </div>
+          <LoadingSpinner message="Loading project..." />
         </div>
       </div>
     );

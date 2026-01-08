@@ -5,6 +5,7 @@ import { useAuth } from '@/app/contexts/AuthContext';
 import AuthGuard from '@/app/components/AuthGuard';
 import DashboardSidebar from '@/app/components/DashboardSidebar';
 import Breadcrumb from '@/app/components/Breadcrumb';
+import LoadingSpinner from '@/app/components/LoadingSpinner';
 import { supabase } from '@/lib/supabase';
 
 interface User {
@@ -235,10 +236,7 @@ function UsersManagementContent() {
 
         {/* Users List */}
         {loading ? (
-          <div className="text-center py-12">
-            <div className="inline-block w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
-            <p className="text-gray-400 mt-4">Loading users...</p>
-          </div>
+          <LoadingSpinner message="Loading users..." />
         ) : filteredUsers.length === 0 ? (
           <div className="bg-gradient-to-br from-purple-900/30 to-blue-900/30 backdrop-blur-lg rounded-xl p-12 border border-purple-500/20 text-center">
             <span className="text-6xl mb-4 block">🔍</span>

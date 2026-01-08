@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import LoadingSpinner from '../../components/LoadingSpinner';
 import { getProjects } from '../../../lib/portfolio-api';
 
 export default function ProjectsPage() {
@@ -75,10 +76,7 @@ export default function ProjectsPage() {
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           {loading ? (
-            <div className="text-center py-20">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent"></div>
-              <p className="text-gray-400 mt-4">Loading projects...</p>
-            </div>
+            <LoadingSpinner message="Loading projects..." />
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((project, index) => {

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/app/contexts/AuthContext';
+import LoadingSpinner from '@/app/components/LoadingSpinner';
 import { getActivityLogs } from '@/lib/portfolio-api';
 
 interface ActivityLog {
@@ -139,10 +140,7 @@ export default function AdminActivityLogsPage() {
 
         {/* Logs List */}
         {loading ? (
-          <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent"></div>
-            <p className="text-gray-400 mt-4">Loading activity logs...</p>
-          </div>
+          <LoadingSpinner message="Loading activity logs..." />
         ) : logs.length === 0 ? (
           <div className="text-center py-20 bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-2xl border border-purple-500/20">
             <p className="text-gray-400 text-lg">No activity logs found</p>
