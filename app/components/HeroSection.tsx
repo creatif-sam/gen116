@@ -35,15 +35,15 @@ export default function HeroSection() {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-gradient-radial from-purple-500/20 via-transparent to-transparent blur-3xl"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto text-center z-10">
+        <div className="max-w-7xl mx-auto text-center z-10 px-4">
           {/* Animated Journey: Idea → Website → Mobile */}
-          <div className={`mb-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
-            <div className="relative flex items-center justify-center gap-8 md:gap-12 lg:gap-16 h-32 md:h-40">
+          <div className={`mb-8 sm:mb-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
+            <div className="relative flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-12 lg:gap-16 py-4">
               
               {/* Step 1: Idea (Lightbulb) */}
               <div className="relative animate-pulse-glow">
-                <div className="absolute inset-0 bg-yellow-500/30 blur-2xl rounded-full animate-float"></div>
-                <div className="relative w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24">
+                <div className="absolute inset-0 bg-yellow-500/30 blur-xl sm:blur-2xl rounded-full animate-float"></div>
+                <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24">
                   <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_30px_rgba(234,179,8,0.6)] animate-float" style={{ animationDuration: '3s' }}>
                     {/* Lightbulb */}
                     <path d="M50 10 C35 10 25 20 25 35 C25 45 30 52 35 58 L35 70 L65 70 L65 58 C70 52 75 45 75 35 C75 20 65 10 50 10 Z" 
@@ -68,21 +68,21 @@ export default function HeroSection() {
                     </defs>
                   </svg>
                 </div>
-                <p className="text-xs md:text-sm text-yellow-400 mt-2 font-semibold">Idea</p>
+                <p className="text-xs sm:text-sm text-yellow-400 mt-2 font-semibold">Idea</p>
               </div>
 
-              {/* Arrow 1 */}
-              <div className="flex items-center gap-2 animate-pulse-glow" style={{ animationDelay: '1s' }}>
-                <div className="h-0.5 w-8 md:w-12 lg:w-16 bg-gradient-to-r from-yellow-400 via-purple-400 to-purple-600 animate-gradient-flow"></div>
-                <svg className="w-4 h-4 md:w-6 md:h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+              {/* Arrow 1 - Horizontal on desktop, vertical on mobile */}
+              <div className="flex sm:flex-row flex-col items-center gap-1 sm:gap-2 animate-pulse-glow rotate-90 sm:rotate-0" style={{ animationDelay: '1s' }}>
+                <div className="h-0.5 w-6 sm:w-8 md:w-12 lg:w-16 bg-gradient-to-r from-yellow-400 via-purple-400 to-purple-600 animate-gradient-flow"></div>
+                <svg className="w-3 h-3 sm:w-4 sm:h-4 md:w-6 md:h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"/>
                 </svg>
               </div>
 
               {/* Step 2: Website */}
               <div className="relative animate-pulse-glow" style={{ animationDelay: '2s' }}>
-                <div className="absolute inset-0 bg-purple-500/30 blur-2xl rounded-xl animate-float" style={{ animationDelay: '1s' }}></div>
-                <div className="relative w-20 h-16 md:w-24 md:h-20 lg:w-28 lg:h-24">
+                <div className="absolute inset-0 bg-purple-500/30 blur-xl sm:blur-2xl rounded-xl animate-float" style={{ animationDelay: '1s' }}></div>
+                <div className="relative w-16 h-14 sm:w-20 sm:h-16 md:w-24 md:h-20 lg:w-28 lg:h-24">
                   <svg viewBox="0 0 120 100" className="w-full h-full drop-shadow-[0_0_30px_rgba(168,85,247,0.6)] animate-float" style={{ animationDuration: '4s', animationDelay: '1s' }}>
                     {/* Monitor */}
                     <rect x="10" y="10" width="100" height="65" rx="4" fill="url(#monitorGradient)" stroke="#A855F7" strokeWidth="2"/>
@@ -110,21 +110,21 @@ export default function HeroSection() {
                     </defs>
                   </svg>
                 </div>
-                <p className="text-xs md:text-sm text-purple-400 mt-2 font-semibold">Website</p>
+                <p className="text-xs sm:text-sm text-purple-400 mt-2 font-semibold">Website</p>
               </div>
 
-              {/* Arrow 2 */}
-              <div className="flex items-center gap-2 animate-pulse-glow" style={{ animationDelay: '3s' }}>
-                <div className="h-0.5 w-8 md:w-12 lg:w-16 bg-gradient-to-r from-purple-600 via-blue-400 to-blue-600 animate-gradient-flow" style={{ animationDelay: '1s' }}></div>
-                <svg className="w-4 h-4 md:w-6 md:h-6 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+              {/* Arrow 2 - Horizontal on desktop, vertical on mobile */}
+              <div className="flex sm:flex-row flex-col items-center gap-1 sm:gap-2 animate-pulse-glow rotate-90 sm:rotate-0" style={{ animationDelay: '3s' }}>
+                <div className="h-0.5 w-6 sm:w-8 md:w-12 lg:w-16 bg-gradient-to-r from-purple-600 via-blue-400 to-blue-600 animate-gradient-flow" style={{ animationDelay: '1s' }}></div>
+                <svg className="w-3 h-3 sm:w-4 sm:h-4 md:w-6 md:h-6 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"/>
                 </svg>
               </div>
 
               {/* Step 3: Mobile App */}
               <div className="relative animate-pulse-glow" style={{ animationDelay: '4s' }}>
-                <div className="absolute inset-0 bg-blue-500/30 blur-2xl rounded-xl animate-float" style={{ animationDelay: '2s' }}></div>
-                <div className="relative w-12 h-20 md:w-14 md:h-24 lg:w-16 lg:h-28">
+                <div className="absolute inset-0 bg-blue-500/30 blur-xl sm:blur-2xl rounded-xl animate-float" style={{ animationDelay: '2s' }}></div>
+                <div className="relative w-10 h-16 sm:w-12 sm:h-20 md:w-14 md:h-24 lg:w-16 lg:h-28">
                   <svg viewBox="0 0 60 100" className="w-full h-full drop-shadow-[0_0_30px_rgba(59,130,246,0.6)] animate-float" style={{ animationDuration: '5s', animationDelay: '2s' }}>
                     {/* Phone body */}
                     <rect x="5" y="5" width="50" height="90" rx="8" fill="url(#phoneGradient)" stroke="#3B82F6" strokeWidth="2"/>
@@ -153,52 +153,52 @@ export default function HeroSection() {
                     </defs>
                   </svg>
                 </div>
-                <p className="text-xs md:text-sm text-blue-400 mt-2 font-semibold">Mobile App</p>
+                <p className="text-xs sm:text-sm text-blue-400 mt-2 font-semibold">Mobile App</p>
               </div>
             </div>
           </div>
 
           {/* Inspiration Quote - Enhanced */}
-          <div className={`mb-12 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className={`mb-8 sm:mb-12 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="relative inline-block">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 blur-xl"></div>
-              <p className="text-xl md:text-2xl text-purple-300 font-light italic relative bg-gradient-to-r from-purple-300 via-pink-300 to-blue-300 bg-clip-text text-transparent animate-gradient-x">
+              <p className="text-lg sm:text-xl md:text-2xl text-purple-300 font-light italic relative bg-gradient-to-r from-purple-300 via-pink-300 to-blue-300 bg-clip-text text-transparent animate-gradient-x px-4">
                 "Nothing will be impossible for them"
               </p>
             </div>
           </div>
 
           {/* Main Tagline - Enhanced */}
-          <div className={`mb-16 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+          <div className={`mb-12 sm:mb-16 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+            <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-4">
               <span className="inline-block animate-fade-in-up">Empowering Your Vision Through</span>
-              <span className="block mt-2 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-gradient-x text-4xl md:text-6xl lg:text-7xl font-extrabold">
+              <span className="block mt-2 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-gradient-x text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold">
                 Innovation & Excellence
               </span>
             </h2>
-            <p className="text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in-up px-4" style={{ animationDelay: '0.6s' }}>
               Unite your ambitions with our expertise. Together, we build solutions that <span className="text-purple-400 font-semibold">transcend boundaries</span>.
             </p>
           </div>
 
           {/* CTA Buttons - Enhanced */}
-          <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <a href="/#services">
-              <button className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 via-purple-500 to-blue-600 rounded-full font-semibold text-lg overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/50">
-                <span className="relative z-10 flex items-center gap-2">
+          <div className={`flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-4 transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <a href="/#services" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-600 via-purple-500 to-blue-600 rounded-full font-semibold text-base sm:text-lg overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/50">
+                <span className="relative z-10 flex items-center justify-center gap-2">
                   Explore Our Services
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </button>
             </a>
-            <a href="/contact">
-              <button className="group px-8 py-4 border-2 border-purple-400 rounded-full font-semibold text-lg relative overflow-hidden transition-all duration-500 hover:scale-105 hover:border-purple-300 hover:shadow-xl hover:shadow-purple-500/30">
-                <span className="relative z-10 flex items-center gap-2">
+            <a href="/contact" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto group px-6 sm:px-8 py-3 sm:py-4 border-2 border-purple-400 rounded-full font-semibold text-base sm:text-lg relative overflow-hidden transition-all duration-500 hover:scale-105 hover:border-purple-300 hover:shadow-xl hover:shadow-purple-500/30">
+                <span className="relative z-10 flex items-center justify-center gap-2">
                   Get In Touch
-                  <svg className="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </span>
