@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/app/contexts/AuthContext';
 import { getCaseStudies, deleteCaseStudy, toggleCaseStudyPublish } from '@/lib/portfolio-api';
+import Breadcrumb from '@/app/components/Breadcrumb';
 
 interface CaseStudy {
   id: string;
@@ -73,11 +74,21 @@ export default function AdminCaseStudiesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
+    <div className="min-h-screen bg-[var(--background)] lg:ml-64">
+      <div className="p-6">
+        <div className="max-w-7xl mx-auto">
+          {/* Breadcrumb */}
+          <Breadcrumb 
+            items={[
+              { label: 'Dashboard', href: '/dashboard/admin' },
+              { label: 'Portfolio', href: '/dashboard/admin/portfolio' },
+              { label: 'Case Studies' }
+            ]} 
+          />
+
+          {/* Header */}
+          <div className="mb-8 mt-6">
+            <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-2">
                 Manage Case Studies
@@ -206,6 +217,7 @@ export default function AdminCaseStudiesPage() {
             ))}
           </div>
         )}
+        </div>
       </div>
     </div>
   );

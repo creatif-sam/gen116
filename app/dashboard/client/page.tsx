@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/app/contexts/AuthContext';
 import AuthGuard from '@/app/components/AuthGuard';
 import DashboardSidebar from '@/app/components/DashboardSidebar';
+import Breadcrumb from '@/app/components/Breadcrumb';
 
 function ClientDashboardContent() {
   const router = useRouter();

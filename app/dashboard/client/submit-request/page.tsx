@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/app/contexts/AuthContext';
 import AuthGuard from '@/app/components/AuthGuard';
 import DashboardSidebar from '@/app/components/DashboardSidebar';
+import Breadcrumb from '@/app/components/Breadcrumb';
 
 function SubmitRequestContent() {
   const router = useRouter();
@@ -51,6 +52,7 @@ function SubmitRequestContent() {
       <div className="flex-1 lg:ml-64 p-4 lg:p-8">
         {/* Header */}
         <div className="mb-8 mt-16 lg:mt-0">
+          <Breadcrumb items={[{ label: 'Dashboard', href: '/dashboard/client' }, { label: 'Submit Request' }]} />
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-3xl font-bold text-white mb-2">Submit New Request</h2>

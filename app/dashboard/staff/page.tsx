@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/app/contexts/AuthContext';
 import AuthGuard from '@/app/components/AuthGuard';
 import DashboardSidebar from '@/app/components/DashboardSidebar';
+import Breadcrumb from '@/app/components/Breadcrumb';
 
 function StaffDashboardContent() {
   const router = useRouter();
@@ -43,6 +44,7 @@ function StaffDashboardContent() {
       <div className="flex-1 lg:ml-64 p-4 lg:p-8">
         {/* Header */}
         <div className="mb-8 mt-16 lg:mt-0">
+          <Breadcrumb items={[{ label: 'Dashboard', href: '/dashboard/staff' }, { label: 'Overview' }]} />
           <h2 className="text-3xl font-bold text-white mb-2">Staff Dashboard</h2>
           <p className="text-gray-400">Manage client requests and projects</p>
         </div>
