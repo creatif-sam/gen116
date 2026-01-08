@@ -11,7 +11,7 @@ export default function PortfolioPage() {
   const [stats, setStats] = useState([
     { value: '12+', label: 'Projects Completed' },
     { value: '95%', label: 'Client Satisfaction' },
-    { value: '12+', label: 'Years Experience' },
+    { value: '2+', label: 'Years Experience' },
     { value: '7', label: 'Happy Clients' }
   ]);
   const [projects, setProjects] = useState<any[]>([]);
