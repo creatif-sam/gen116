@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useAuth } from '../../contexts/AuthContext';
-import { getProjects, getCaseStudies, getPortfolioStats, getActivityLogs } from '../../lib/portfolio-api';
+import { useAuth } from '@/app/contexts/AuthContext';
+import { getProjects, getCaseStudies, getPortfolioStats, getActivityLogs } from '@/lib/portfolio-api';
 
 export default function PortfolioDashboardPage() {
   const { user } = useAuth();

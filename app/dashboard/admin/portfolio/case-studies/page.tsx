@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useAuth } from '../../../contexts/AuthContext';
-import { getCaseStudies, deleteCaseStudy, toggleCaseStudyPublish } from '../../../lib/portfolio-api';
+import { useAuth } from '@/app/contexts/AuthContext';
+import { getCaseStudies, deleteCaseStudy, toggleCaseStudyPublish } from '@/lib/portfolio-api';
 
 interface CaseStudy {
   id: string;

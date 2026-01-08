@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useAuth } from '../../../contexts/AuthContext';
-import { getProjects, deleteProject, toggleProjectPublish } from '../../../lib/portfolio-api';
+import { useAuth } from '@/app/contexts/AuthContext';
+import { getProjects, deleteProject, toggleProjectPublish } from '@/lib/portfolio-api';
 
 interface Project {
   id: string;

@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { useAuth } from '../../../../contexts/AuthContext';
-import { getProjectBySlug, createProject, updateProject } from '../../../../lib/portfolio-api';
+import { useAuth } from '@/app/contexts/AuthContext';
+import { getProjectBySlug, createProject, updateProject } from '@/lib/portfolio-api';
 
 export default function ProjectEditorPage() {
   const { user } = useAuth();
