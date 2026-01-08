@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const { data: { session } } = await supabase.auth.getSession();
         setSession(session);
-        
+
         if (session?.user) {
           // Get user data from our database using auth_id
           const { data: userData } = await userAPI.getUserByAuthId(session.user.id);
@@ -43,6 +43,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               company: userData.company,
               phone: userData.phone,
             });
+          } else {
+            // Fallback: create profile if missing
+            const { data: newProfile, error: createError } = await userAPI.createUser({
+              auth_id: session.user.id,
+              email: session.user.email,
+              name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
+              role: session.user.user_metadata?.role || 'client',
+            });
+            if (newProfile && !createError) {
+              setUser({
+                id: newProfile.id,
+                name: newProfile.name,
+                email: newProfile.email,
+                role: newProfile.role as UserRole,
+                avatar: newProfile.avatar,
+                company: newProfile.company,
+                phone: newProfile.phone,
+              });
+            } else {
+              setUser(null);
+            }
           }
         }
       } catch (error) {
@@ -57,7 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session);
-      
+
       if (session?.user) {
         const { data: userData } = await userAPI.getUserByAuthId(session.user.id);
         if (userData) {
@@ -70,6 +91,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             company: userData.company,
             phone: userData.phone,
           });
+        } else {
+          // Fallback: create profile if missing
+          const { data: newProfile, error: createError } = await userAPI.createUser({
+            auth_id: session.user.id,
+            email: session.user.email,
+            name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
+            role: session.user.user_metadata?.role || 'client',
+          });
+          if (newProfile && !createError) {
+            setUser({
+              id: newProfile.id,
+              name: newProfile.name,
+              email: newProfile.email,
+              role: newProfile.role as UserRole,
+              avatar: newProfile.avatar,
+              company: newProfile.company,
+              phone: newProfile.phone,
+            });
+          } else {
+            setUser(null);
+          }
         }
       } else {
         setUser(null);
@@ -228,20 +270,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
 
         if (createError || !newProfile) {
-          console.error('Failed to create profile:', createError);
-          throw new Error('User profile not found in database. Please contact support.');
+          console.error('Failed to create profile:', { createError, newProfile });
+          // Try to fetch the profile again in case it was created by a trigger or race condition
+          const { data: existingProfile, error: fetchError } = await userAPI.getUserByAuthId(authData.user.id);
+          if (existingProfile) {
+            setUser({
+              id: existingProfile.id,
+              name: existingProfile.name,
+              email: existingProfile.email,
+              role: existingProfile.role as UserRole,
+              avatar: existingProfile.avatar,
+              company: existingProfile.company,
+              phone: existingProfile.phone,
+            });
+            console.log('Fetched existing profile after failed insert');
+          } else {
+            throw new Error('User profile not found in database. Please contact support.');
+          }
+        } else {
+          setUser({
+            id: newProfile.id,
+            name: newProfile.name,
+            email: newProfile.email,
+            role: newProfile.role as UserRole,
+            avatar: newProfile.avatar,
+            company: newProfile.company,
+            phone: newProfile.phone,
+          });
+          console.log('Profile created successfully from auth data');
         }
-
-        setUser({
-          id: newProfile.id,
-          name: newProfile.name,
-          email: newProfile.email,
-          role: newProfile.role as UserRole,
-          avatar: newProfile.avatar,
-          company: newProfile.company,
-          phone: newProfile.phone,
-        });
-        console.log('Profile created successfully from auth data');
       }
 
       return { success: true };
