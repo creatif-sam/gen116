@@ -58,57 +58,59 @@ export default function Footer() {
     <footer className="relative bg-gradient-to-b from-[#0a0520] to-[#050210] border-t border-purple-500/20">
       {/* Newsletter Section */}
       <div className="border-b border-purple-500/20">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center">
             {/* Left - Newsletter Text */}
-            <div>
-              <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-4">
+            <div className="text-center lg:text-left">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-3 sm:mb-4">
                 What's New at G11 Consult?
               </h3>
-              <p className="text-gray-400 text-lg leading-relaxed">
+              <p className="text-gray-400 text-base sm:text-lg leading-relaxed">
                 Get the latest news about web development, software innovation, and cutting-edge AI trends delivered straight to your inbox.
               </p>
             </div>
 
             {/* Right - Newsletter Form & Social */}
             <div>
-              <form onSubmit={handleNewsletterSubmit} className="flex gap-3 mb-6">
+              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 mb-6">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   required
-                  className="flex-1 px-6 py-4 bg-purple-900/20 border border-purple-500/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-500"
+                  className="flex-1 px-4 py-3 sm:px-6 sm:py-4 bg-purple-900/20 border border-purple-500/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-500 text-sm sm:text-base w-full"
                 />
                 <button
                   type="submit"
-                  className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105"
+                  className="px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 text-sm sm:text-base whitespace-nowrap w-full sm:w-auto"
                 >
                   Subscribe
                 </button>
               </form>
 
               {/* Social Media Icons */}
-              <div className="flex items-center gap-4">
-                <span className="text-gray-400">Follow us:</span>
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    className={`w-12 h-12 bg-gradient-to-br ${social.gradient} rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:rotate-6`}
-                    aria-label={social.name}
-                    title={social.name}
-                  >
-                    <svg 
-                      className="w-6 h-6 fill-white" 
-                      viewBox="0 0 24 24" 
-                      xmlns="http://www.w3.org/2000/svg"
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                <span className="text-gray-400 text-sm sm:text-base">Follow us:</span>
+                <div className="flex items-center gap-3 sm:gap-4">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br ${social.gradient} rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:rotate-6 flex-shrink-0`}
+                      aria-label={social.name}
+                      title={social.name}
                     >
-                      <path d={social.svgPath} />
-                    </svg>
-                  </a>
-                ))}
+                      <svg 
+                        className="w-5 h-5 sm:w-6 sm:h-6 fill-white" 
+                        viewBox="0 0 24 24" 
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d={social.svgPath} />
+                      </svg>
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -116,8 +118,8 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
           {/* Company Info */}
           <div>
             <div className="flex items-center mb-6">
@@ -219,12 +221,12 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-purple-500/20">
-        <div className="max-w-7xl mx-auto px-6 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-sm text-center md:text-left">
+            <p className="text-gray-400 text-xs sm:text-sm text-center md:text-left">
               © {currentYear} Gen11 Consult. All rights reserved.
             </p>
-            <div className="flex gap-6 text-sm">
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
               <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors duration-300">
                 Privacy Policy
               </a>
@@ -236,7 +238,7 @@ export default function Footer() {
               </a>
             </div>
           </div>
-          <p className="text-center mt-4 text-sm text-purple-400 italic">
+          <p className="text-center mt-4 text-xs sm:text-sm text-purple-400 italic">
             "Together, nothing is impossible."
           </p>
         </div>

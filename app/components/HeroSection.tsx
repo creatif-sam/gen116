@@ -36,20 +36,124 @@ export default function HeroSection() {
         </div>
 
         <div className="max-w-7xl mx-auto text-center z-10">
-          {/* Logo/Company Name - Enhanced Animation */}
-          <div className={`mb-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
-            <div className="inline-block relative">
-              {/* Glow ring around logo */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-purple-500/20 rounded-full blur-2xl animate-spin-slow scale-110"></div>
+          {/* Animated Journey: Idea → Website → Mobile */}
+          <div className={`mb-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
+            <div className="relative flex items-center justify-center gap-8 md:gap-12 lg:gap-16 h-32 md:h-40">
               
-              <div className="flex items-center justify-center mb-4 relative">
-                <div className="w-64 md:w-80 lg:w-96 animate-float relative">
-                  <img 
-                    src="/logos/logo-navbar.png" 
-                    alt="GEN11 Logo" 
-                    className="w-full h-auto object-contain drop-shadow-[0_0_50px_rgba(168,85,247,0.4)] hover:drop-shadow-[0_0_80px_rgba(168,85,247,0.6)] transition-all duration-700" 
-                  />
+              {/* Step 1: Idea (Lightbulb) */}
+              <div className="relative animate-pulse-glow">
+                <div className="absolute inset-0 bg-yellow-500/30 blur-2xl rounded-full animate-float"></div>
+                <div className="relative w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24">
+                  <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_30px_rgba(234,179,8,0.6)] animate-float" style={{ animationDuration: '3s' }}>
+                    {/* Lightbulb */}
+                    <path d="M50 10 C35 10 25 20 25 35 C25 45 30 52 35 58 L35 70 L65 70 L65 58 C70 52 75 45 75 35 C75 20 65 10 50 10 Z" 
+                          fill="url(#bulbGradient)" stroke="#FCD34D" strokeWidth="2"/>
+                    <rect x="38" y="72" width="24" height="8" rx="2" fill="#94A3B8"/>
+                    <rect x="40" y="82" width="20" height="3" rx="1.5" fill="#64748B"/>
+                    
+                    {/* Light rays */}
+                    <g className="animate-spin-slow origin-center" style={{ transformBox: 'fill-box', animationDuration: '8s' }}>
+                      <line x1="50" y1="5" x2="50" y2="0" stroke="#FCD34D" strokeWidth="2" strokeLinecap="round"/>
+                      <line x1="70" y1="15" x2="75" y2="10" stroke="#FCD34D" strokeWidth="2" strokeLinecap="round"/>
+                      <line x1="30" y1="15" x2="25" y2="10" stroke="#FCD34D" strokeWidth="2" strokeLinecap="round"/>
+                      <line x1="80" y1="35" x2="85" y2="35" stroke="#FCD34D" strokeWidth="2" strokeLinecap="round"/>
+                      <line x1="20" y1="35" x2="15" y2="35" stroke="#FCD34D" strokeWidth="2" strokeLinecap="round"/>
+                    </g>
+                    
+                    <defs>
+                      <linearGradient id="bulbGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#FEF3C7"/>
+                        <stop offset="100%" stopColor="#FCD34D"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
                 </div>
+                <p className="text-xs md:text-sm text-yellow-400 mt-2 font-semibold">Idea</p>
+              </div>
+
+              {/* Arrow 1 */}
+              <div className="flex items-center gap-2 animate-pulse-glow" style={{ animationDelay: '1s' }}>
+                <div className="h-0.5 w-8 md:w-12 lg:w-16 bg-gradient-to-r from-yellow-400 via-purple-400 to-purple-600 animate-gradient-flow"></div>
+                <svg className="w-4 h-4 md:w-6 md:h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"/>
+                </svg>
+              </div>
+
+              {/* Step 2: Website */}
+              <div className="relative animate-pulse-glow" style={{ animationDelay: '2s' }}>
+                <div className="absolute inset-0 bg-purple-500/30 blur-2xl rounded-xl animate-float" style={{ animationDelay: '1s' }}></div>
+                <div className="relative w-20 h-16 md:w-24 md:h-20 lg:w-28 lg:h-24">
+                  <svg viewBox="0 0 120 100" className="w-full h-full drop-shadow-[0_0_30px_rgba(168,85,247,0.6)] animate-float" style={{ animationDuration: '4s', animationDelay: '1s' }}>
+                    {/* Monitor */}
+                    <rect x="10" y="10" width="100" height="65" rx="4" fill="url(#monitorGradient)" stroke="#A855F7" strokeWidth="2"/>
+                    <rect x="15" y="15" width="90" height="55" rx="2" fill="#1E1B4B"/>
+                    
+                    {/* Website content lines */}
+                    <rect x="20" y="20" width="35" height="4" rx="2" fill="#A855F7" className="animate-pulse"/>
+                    <rect x="20" y="28" width="50" height="3" rx="1.5" fill="#818CF8" className="animate-pulse" style={{ animationDelay: '0.2s' }}/>
+                    <rect x="20" y="34" width="45" height="3" rx="1.5" fill="#818CF8" className="animate-pulse" style={{ animationDelay: '0.4s' }}/>
+                    
+                    {/* Browser dots */}
+                    <circle cx="22" cy="22" r="2" fill="#EF4444"/>
+                    <circle cx="29" cy="22" r="2" fill="#FBBF24"/>
+                    <circle cx="36" cy="22" r="2" fill="#10B981"/>
+                    
+                    {/* Stand */}
+                    <path d="M 50 75 L 45 82 L 75 82 L 70 75 Z" fill="#64748B"/>
+                    <rect x="35" y="82" width="50" height="3" rx="1.5" fill="#475569"/>
+                    
+                    <defs>
+                      <linearGradient id="monitorGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#312E81"/>
+                        <stop offset="100%" stopColor="#1E1B4B"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <p className="text-xs md:text-sm text-purple-400 mt-2 font-semibold">Website</p>
+              </div>
+
+              {/* Arrow 2 */}
+              <div className="flex items-center gap-2 animate-pulse-glow" style={{ animationDelay: '3s' }}>
+                <div className="h-0.5 w-8 md:w-12 lg:w-16 bg-gradient-to-r from-purple-600 via-blue-400 to-blue-600 animate-gradient-flow" style={{ animationDelay: '1s' }}></div>
+                <svg className="w-4 h-4 md:w-6 md:h-6 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"/>
+                </svg>
+              </div>
+
+              {/* Step 3: Mobile App */}
+              <div className="relative animate-pulse-glow" style={{ animationDelay: '4s' }}>
+                <div className="absolute inset-0 bg-blue-500/30 blur-2xl rounded-xl animate-float" style={{ animationDelay: '2s' }}></div>
+                <div className="relative w-12 h-20 md:w-14 md:h-24 lg:w-16 lg:h-28">
+                  <svg viewBox="0 0 60 100" className="w-full h-full drop-shadow-[0_0_30px_rgba(59,130,246,0.6)] animate-float" style={{ animationDuration: '5s', animationDelay: '2s' }}>
+                    {/* Phone body */}
+                    <rect x="5" y="5" width="50" height="90" rx="8" fill="url(#phoneGradient)" stroke="#3B82F6" strokeWidth="2"/>
+                    <rect x="10" y="15" width="40" height="65" rx="3" fill="#0F172A"/>
+                    
+                    {/* App icons */}
+                    <rect x="13" y="18" width="8" height="8" rx="2" fill="#8B5CF6" className="animate-pulse"/>
+                    <rect x="23" y="18" width="8" height="8" rx="2" fill="#3B82F6" className="animate-pulse" style={{ animationDelay: '0.2s' }}/>
+                    <rect x="33" y="18" width="8" height="8" rx="2" fill="#EC4899" className="animate-pulse" style={{ animationDelay: '0.4s' }}/>
+                    <rect x="13" y="28" width="8" height="8" rx="2" fill="#10B981" className="animate-pulse" style={{ animationDelay: '0.6s' }}/>
+                    <rect x="23" y="28" width="8" height="8" rx="2" fill="#F59E0B" className="animate-pulse" style={{ animationDelay: '0.8s' }}/>
+                    <rect x="33" y="28" width="8" height="8" rx="2" fill="#06B6D4" className="animate-pulse" style={{ animationDelay: '1s' }}/>
+                    
+                    {/* Notification bar */}
+                    <rect x="13" y="10" width="14" height="2" rx="1" fill="#64748B"/>
+                    <circle cx="44" cy="11" r="1.5" fill="#10B981"/>
+                    
+                    {/* Home button */}
+                    <circle cx="30" cy="87" r="4" fill="#1E293B" stroke="#475569" strokeWidth="1"/>
+                    
+                    <defs>
+                      <linearGradient id="phoneGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#1E3A8A"/>
+                        <stop offset="100%" stopColor="#0F172A"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <p className="text-xs md:text-sm text-blue-400 mt-2 font-semibold">Mobile App</p>
               </div>
             </div>
           </div>
