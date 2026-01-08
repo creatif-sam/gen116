@@ -126,9 +126,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           name: name,
           email: email,
           role: role as UserRole,
-          avatar: null,
-          company: null,
-          phone: null,
+          avatar: undefined,
+          company: undefined,
+          phone: undefined,
         });
         console.log('User state updated with auth data');
       } else {
