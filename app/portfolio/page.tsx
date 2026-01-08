@@ -11,7 +11,7 @@ export default function PortfolioPage() {
   const [stats, setStats] = useState([
     { value: '12+', label: 'Projects Completed' },
     { value: '95%', label: 'Client Satisfaction' },
-    { value: '2+', label: 'Years Experience' },
+    { value: '12+', label: 'Years Experience' },
     { value: '7', label: 'Happy Clients' }
   ]);
   const [projects, setProjects] = useState<any[]>([]);
@@ -25,12 +25,19 @@ export default function PortfolioPage() {
   const loadData = async () => {
     // Load stats
     const { data: statsData } = await getPortfolioStats();
-    if (statsData) {
+    if (statsData && statsData.projects_completed && statsData.happy_clients) {
       setStats([
         { value: `${statsData.projects_completed}+`, label: 'Projects Completed' },
-        { value: `${statsData.client_satisfaction}%`, label: 'Client Satisfaction' },
-        { value: `${statsData.years_experience}+`, label: 'Years Experience' },
+        { value: `${statsData.client_satisfaction || 95}%`, label: 'Client Satisfaction' },
+        { value: `${statsData.years_experience || 12}+`, label: 'Years Experience' },
         { value: `${statsData.happy_clients}+`, label: 'Happy Clients' }
+      ]);
+    } else {
+      setStats([
+        { value: '12+', label: 'Projects Completed' },
+        { value: '95%', label: 'Client Satisfaction' },
+        { value: '12+', label: 'Years Experience' },
+        { value: '7', label: 'Happy Clients' }
       ]);
     }
 
