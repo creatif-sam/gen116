@@ -9,7 +9,8 @@ import { useAuth } from '../../contexts/AuthContext';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login, loading } = useAuth();
+  const { login } = useAuth();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,20 +20,23 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
-    const result = await login(email, password);
-    
-    if (result.success) {
-      // Redirect will happen in redirect page based on user role
-      router.push('/dashboard/redirect');
-    } else {
-      // Check if error is related to email confirmation
-      if (result.error?.includes('Email not confirmed') || result.error?.includes('confirm') || result.error?.includes('verify')) {
-        setShowEmailConfirmModal(true);
+    setLoading(true);
+    try {
+      const result = await login(email, password);
+      if (result.success) {
+        // Redirect will happen in redirect page based on user role
+        router.push('/dashboard/redirect');
       } else {
-        setError(result.error || 'Login failed');
-        setShowErrorModal(true);
+        // Check if error is related to email confirmation
+        if (result.error?.includes('Email not confirmed') || result.error?.includes('confirm') || result.error?.includes('verify')) {
+          setShowEmailConfirmModal(true);
+        } else {
+          setError(result.error || 'Login failed');
+          setShowErrorModal(true);
+        }
       }
+    } finally {
+      setLoading(false);
     }
   };
 

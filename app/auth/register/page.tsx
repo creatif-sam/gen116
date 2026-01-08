@@ -10,7 +10,8 @@ import { UserRole } from '@/app/types/user';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { signup, loading } = useAuth();
+  const { signup } = useAuth();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,32 +28,35 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
+    try {
+      // Validate form
+      if (formData.password !== formData.confirmPassword) {
+        setError('Passwords do not match');
+        setShowErrorModal(true);
+        return;
+      }
 
-    // Validate form
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      setShowErrorModal(true);
-      return;
-    }
+      if (formData.password.length < 6) {
+        setError('Password must be at least 6 characters');
+        setShowErrorModal(true);
+        return;
+      }
 
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters');
-      setShowErrorModal(true);
-      return;
-    }
-
-    // Signup
-    const result = await signup(formData.email, formData.password, formData.name, formData.role);
-    
-    if (result.success) {
-      setShowSuccessModal(true);
-      // Show success modal then redirect to login
-      setTimeout(() => {
-        router.push('/auth/login');
-      }, 3000);
-    } else {
-      setError(result.error || 'Signup failed');
-      setShowErrorModal(true);
+      // Signup
+      const result = await signup(formData.email, formData.password, formData.name, formData.role);
+      if (result.success) {
+        setShowSuccessModal(true);
+        // Show success modal then redirect to login
+        setTimeout(() => {
+          router.push('/auth/login');
+        }, 3000);
+      } else {
+        setError(result.error || 'Signup failed');
+        setShowErrorModal(true);
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
