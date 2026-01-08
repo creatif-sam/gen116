@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Gen11 Consult - Professional Tech Solutions",
   description: "Website Development, Software Development, Graphic Design, Data Analytics, IT Consulting, Market Research, Business Consulting",
+  verification: {
+    google: "xaETzoF3XvbQUrs9kVCiZ3ojHrcvW0FtTWp0_2sVslY",
+  },
 };
 
 export default function RootLayout({
