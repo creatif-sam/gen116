@@ -1,12 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useAuth } from '@/app/contexts/AuthContext';
+import AuthGuard from '@/app/components/AuthGuard';
+import DashboardSidebar from '@/app/components/DashboardSidebar';
 
-export default function SubmitRequestPage() {
+function SubmitRequestContent() {
   const router = useRouter();
-  const [userEmail, setUserEmail] = useState('');
+  const { user } = useAuth();
   const [files, setFiles] = useState<File[]>([]);
   const [formData, setFormData] = useState({
     title: '',
@@ -16,18 +19,6 @@ export default function SubmitRequestPage() {
     budget: '',
     deadline: '',
   });
-
-  useEffect(() => {
-    const role = sessionStorage.getItem('userRole');
-    const email = sessionStorage.getItem('userEmail');
-    
-    if (role !== 'client') {
-      router.push('/dashboard');
-      return;
-    }
-    
-    setUserEmail(email || '');
-  }, [router]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -53,34 +44,29 @@ export default function SubmitRequestPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0520] via-[#1a1040] to-[#0a0520]">
-      {/* Top Navigation */}
-      <nav className="bg-[#0a0520]/95 backdrop-blur-lg border-b border-purple-500/20">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/dashboard/client" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-xl">🏢</span>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0520] via-[#1a1040] to-[#0a0520] flex">
+      <DashboardSidebar />
+      
+      {/* Main Content */}
+      <div className="flex-1 lg:ml-64 p-4 lg:p-8">
+        {/* Header */}
+        <div className="mb-8 mt-16 lg:mt-0">
+          <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-xl font-bold text-white">GEN11 CONSULT</h1>
-              <p className="text-xs text-gray-400">Submit New Request</p>
+              <h2 className="text-3xl font-bold text-white mb-2">Submit New Request</h2>
+              <p className="text-gray-400">Fill in the details below to submit your project request</p>
             </div>
-          </Link>
-          
-          <Link
-            href="/dashboard/client"
-            className="px-4 py-2 bg-purple-900/30 border border-purple-500/30 rounded-lg text-purple-400 text-sm font-semibold hover:bg-purple-900/40 transition-all"
-          >
-            ← Back to Dashboard
-          </Link>
+            <Link
+              href="/dashboard/client"
+              className="px-4 py-2 bg-purple-900/30 border border-purple-500/30 rounded-lg text-purple-400 text-sm font-semibold hover:bg-purple-900/40 transition-all"
+            >
+              ← Back
+            </Link>
+          </div>
         </div>
-      </nav>
 
-      <div className="max-w-4xl mx-auto px-6 py-8">
+        <div className="max-w-4xl">
         <div className="bg-gradient-to-br from-purple-900/30 to-blue-900/30 backdrop-blur-lg rounded-2xl p-8 border border-purple-500/20">
-          <h2 className="text-3xl font-bold text-white mb-2">Submit New Request</h2>
-          <p className="text-gray-400 mb-8">Fill in the details below to submit your project request</p>
-
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Title */}
             <div>
@@ -244,7 +230,16 @@ export default function SubmitRequestPage() {
             </div>
           </form>
         </div>
+        </div>
       </div>
     </div>
+  );
+}
+
+export default function SubmitRequestPage() {
+  return (
+    <AuthGuard allowedRoles={['client']}>
+      <SubmitRequestContent />
+    </AuthGuard>
   );
 }

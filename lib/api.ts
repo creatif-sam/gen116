@@ -8,7 +8,18 @@ export const userAPI = {
       .from('profiles')
       .select('*')
       .eq('email', email)
-      .single();
+      .maybeSingle();
+    
+    return { data, error };
+  },
+
+  // Get user by auth_id
+  async getUserByAuthId(authId: string) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('auth_id', authId)
+      .maybeSingle();
     
     return { data, error };
   },

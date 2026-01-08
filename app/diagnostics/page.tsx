@@ -286,7 +286,7 @@ export default function DiagnosticsPage() {
               <p className="text-blue-400 font-semibold">DB Test</p>
             </div>
           </Link>
-          <Link href="/dashboard/signup">
+          <Link href="/auth/register">
             <div className="p-4 bg-green-900/20 rounded-lg border border-green-500/20 text-center hover:bg-green-900/30 transition-colors">
               <p className="text-green-400 font-semibold">Signup</p>
             </div>

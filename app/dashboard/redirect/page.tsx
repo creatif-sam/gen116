@@ -13,7 +13,7 @@ export default function RedirectPage() {
       if (user) {
         router.push(`/dashboard/${user.role}`);
       } else {
-        router.push('/dashboard');
+        router.push('/auth/login');
       }
     }
   }, [user, loading, router]);

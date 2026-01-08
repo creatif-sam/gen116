@@ -21,7 +21,7 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     await logout();
-    router.push('/dashboard');
+    router.push('/auth/login');
   };
 
   const navItems = [
@@ -30,7 +30,7 @@ export default function Navbar() {
     { name: 'About', href: '/about' },
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'Contact', href: '/contact' },
-    ...(isAuthenticated ? [{ name: `${user?.role} Dashboard`, href: `/dashboard/${user?.role}` }] : [{ name: 'Dashboard', href: '/dashboard' }]),
+    ...(isAuthenticated ? [{ name: `${user?.role} Dashboard`, href: `/dashboard/${user?.role}` }] : [{ name: 'Login', href: '/auth/login' }]),
   ];
 
   return (
@@ -44,13 +44,10 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <a href="#home" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-              <span className="text-xl">🏢</span>
+          <a href="#home" className="flex items-center group">
+            <div className="h-12 w-auto transform group-hover:scale-110 transition-transform duration-300">
+              <img src="/logos/logo-navbar.png" alt="GEN11 Logo" className="h-full w-auto object-contain" />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-              GEN11
-            </span>
           </a>
 
           {/* Desktop Navigation */}
@@ -78,7 +75,7 @@ export default function Navbar() {
           {/* CTA Button - Desktop */}
           <div className="hidden md:block">
             {!isAuthenticated ? (
-              <a href="/dashboard/signup">
+              <a href="/auth/register">
                 <button className="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105">
                   Get Started
                 </button>

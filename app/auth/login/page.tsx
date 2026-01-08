@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import { useAuth } from '../contexts/AuthContext';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import { useAuth } from '../../contexts/AuthContext';
 
-export default function DashboardLoginPage() {
+export default function LoginPage() {
   const router = useRouter();
   const { login, loading } = useAuth();
   const [email, setEmail] = useState('');
@@ -23,7 +23,7 @@ export default function DashboardLoginPage() {
     const result = await login(email, password);
     
     if (result.success) {
-      // Will be redirected by AuthContext after user is loaded
+      // Redirect will happen in redirect page based on user role
       router.push('/dashboard/redirect');
     } else {
       // Check if error is related to email confirmation

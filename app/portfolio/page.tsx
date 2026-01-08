@@ -9,10 +9,10 @@ import { getProjects, getCaseStudies, getPortfolioStats } from '../../lib/portfo
 export default function PortfolioPage() {
   const [isVisible, setIsVisible] = useState(false);
   const [stats, setStats] = useState([
-    { value: '150+', label: 'Projects Completed' },
+    { value: '16+', label: 'Projects Completed' },
     { value: '95%', label: 'Client Satisfaction' },
     { value: '12+', label: 'Years Experience' },
-    { value: '50+', label: 'Happy Clients' }
+    { value: '7', label: 'Happy Clients' }
   ]);
   const [projects, setProjects] = useState<any[]>([]);
   const [caseStudies, setCaseStudies] = useState<any[]>([]);

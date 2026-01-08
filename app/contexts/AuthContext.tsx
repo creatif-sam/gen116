@@ -31,8 +31,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setSession(session);
         
         if (session?.user) {
-          // Get user data from our database
-          const { data: userData } = await userAPI.getUserByEmail(session.user.email!);
+          // Get user data from our database using auth_id
+          const { data: userData } = await userAPI.getUserByAuthId(session.user.id);
           if (userData) {
             setUser({
               id: userData.id,
@@ -59,7 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setSession(session);
       
       if (session?.user) {
-        const { data: userData } = await userAPI.getUserByEmail(session.user.email!);
+        const { data: userData } = await userAPI.getUserByAuthId(session.user.id);
         if (userData) {
           setUser({
             id: userData.id,
@@ -196,8 +196,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       console.log('Auth session created for user:', authData.user?.id);
 
-      // Get user data from our database
-      const { data: userData, error: dbError } = await userAPI.getUserByEmail(email);
+      // Get user data from our database using auth_id
+      const { data: userData, error: dbError } = await userAPI.getUserByAuthId(authData.user.id);
       
       console.log('Database user lookup:', { userData, dbError });
 
@@ -218,7 +218,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
         console.log('User state updated successfully');
       } else {
-        throw new Error('User profile not found in database');
+        // Profile doesn't exist - try to create it from auth user data
+        console.log('Profile not found, attempting to create from auth data...');
+        const { data: newProfile, error: createError } = await userAPI.createUser({
+          auth_id: authData.user.id,
+          email: authData.user.email,
+          name: authData.user.user_metadata?.name || authData.user.email?.split('@')[0] || 'User',
+          role: authData.user.user_metadata?.role || 'client',
+        });
+
+        if (createError || !newProfile) {
+          console.error('Failed to create profile:', createError);
+          throw new Error('User profile not found in database. Please contact support.');
+        }
+
+        setUser({
+          id: newProfile.id,
+          name: newProfile.name,
+          email: newProfile.email,
+          role: newProfile.role as UserRole,
+          avatar: newProfile.avatar,
+          company: newProfile.company,
+          phone: newProfile.phone,
+        });
+        console.log('Profile created successfully from auth data');
       }
 
       return { success: true };

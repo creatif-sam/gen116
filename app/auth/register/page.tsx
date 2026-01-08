@@ -8,7 +8,7 @@ import Footer from '@/app/components/Footer';
 import { useAuth } from '@/app/contexts/AuthContext';
 import { UserRole } from '@/app/types/user';
 
-export default function SignupPage() {
+export default function RegisterPage() {
   const router = useRouter();
   const { signup, loading } = useAuth();
   const [formData, setFormData] = useState({
@@ -48,7 +48,7 @@ export default function SignupPage() {
       setShowSuccessModal(true);
       // Show success modal then redirect to login
       setTimeout(() => {
-        router.push('/dashboard');
+        router.push('/auth/login');
       }, 3000);
     } else {
       setError(result.error || 'Signup failed');
@@ -239,7 +239,7 @@ export default function SignupPage() {
               <p className="text-gray-400">
                 Already have an account?{' '}
                 <Link 
-                  href="/dashboard"
+                  href="/auth/login"
                   className="text-purple-400 hover:text-purple-300 font-semibold transition-colors"
                 >
                   Sign in

@@ -157,12 +157,12 @@ export default function AuthTestPage() {
 
         {/* Quick Links */}
         <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Link href="/dashboard">
+          <Link href="/auth/login">
             <div className="p-4 bg-purple-900/20 rounded-lg border border-purple-500/20 text-center hover:bg-purple-900/30 transition-colors">
               <p className="text-purple-400 font-semibold">Login Page</p>
             </div>
           </Link>
-          <Link href="/dashboard/signup">
+          <Link href="/auth/register">
             <div className="p-4 bg-green-900/20 rounded-lg border border-green-500/20 text-center hover:bg-green-900/30 transition-colors">
               <p className="text-green-400 font-semibold">Signup Page</p>
             </div>

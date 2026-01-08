@@ -28,8 +28,8 @@ export default function AboutPage() {
 
   const stats = [
     { value: '2024', label: 'Founded', icon: '🚀' },
-    { value: '150+', label: 'Projects Delivered', icon: '💼' },
-    { value: '50+', label: 'Happy Clients', icon: '😊' },
+    { value: '16+', label: 'Projects Delivered', icon: '💼' },
+    { value: '7', label: 'Happy Clients', icon: '😊' },
     { value: '24/7', label: 'Support Available', icon: '🛟' }
   ];
 
