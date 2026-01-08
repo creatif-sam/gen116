@@ -244,13 +244,13 @@ export default function ContactPage() {
                   <p className="text-gray-700 flex items-center gap-3">
                     <span className="text-2xl">📧</span>
                     <a href="mailto:info@gen11consult.com" className="hover:text-purple-600 transition-colors">
-                      info@gen11consult.com
+                      info@gen116.com
                     </a>
                   </p>
                   <p className="text-gray-700 flex items-center gap-3">
                     <span className="text-2xl">📞</span>
                     <a href="tel:+233000000000" className="hover:text-purple-600 transition-colors">
-                      +233 (0) 000 000 000
+                        +233 54 675 5552
                     </a>
                   </p>
                   <p className="text-gray-700 flex items-start gap-3">

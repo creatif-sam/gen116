@@ -63,7 +63,7 @@ export default function Footer() {
             {/* Left - Newsletter Text */}
             <div className="text-center lg:text-left">
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-3 sm:mb-4">
-                What's New at G11 Consult?
+                What's New at Gen116 Consult?
               </h3>
               <p className="text-gray-400 text-base sm:text-lg leading-relaxed">
                 Get the latest news about web development, software innovation, and cutting-edge AI trends delivered straight to your inbox.
