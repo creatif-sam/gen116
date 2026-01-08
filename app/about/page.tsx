@@ -28,7 +28,7 @@ export default function AboutPage() {
 
   const stats = [
     { value: '2024', label: 'Founded', icon: '🚀' },
-    { value: '16+', label: 'Projects Delivered', icon: '💼' },
+    { value: '12+', label: 'Projects Delivered', icon: '💼' },
     { value: '7', label: 'Happy Clients', icon: '😊' },
     { value: '24/7', label: 'Support Available', icon: '🛟' }
   ];
@@ -60,7 +60,7 @@ export default function AboutPage() {
     {
       year: '2024',
       title: 'Our Beginning',
-      description: 'GEN11 was founded with a vision to revolutionize business consulting and digital transformation.',
+      description: 'Gen116 was founded with a vision to revolutionize business consulting and digital transformation.',
       icon: '🌟'
     },
     {
@@ -100,7 +100,7 @@ export default function AboutPage() {
               <span className="text-6xl">🏢</span>
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
-              About GEN11 Consult
+              About Gen116 Consult
             </h1>
             <p className="text-xl text-gray-300 mb-8 leading-relaxed">
               Since 2024, we've been transforming businesses through innovative consulting and cutting-edge digital solutions. 
@@ -210,7 +210,7 @@ export default function AboutPage() {
                 className={`relative mb-16 transition-all duration-700 ${
                   activeSection >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
+                style={{ transitionDelay: `${index * 12}ms` }}
               >
                 <div className={`flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
                   <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'}`}>
@@ -274,7 +274,7 @@ export default function AboutPage() {
               Ready to Transform Your Business?
             </h2>
             <p className="text-gray-300 text-lg mb-8">
-              Join the businesses who trust GEN11 to drive their success. Let's create something extraordinary together.
+              Join the businesses who trust Gen116 to drive their success. Let's create something extraordinary together.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/contact">

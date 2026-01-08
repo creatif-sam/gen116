@@ -18,7 +18,7 @@ export default function ContactPage() {
     // Sequential animation - each step activates after the previous
     const timers = [
       setTimeout(() => setActiveStep(0), 500),
-      setTimeout(() => setActiveStep(1), 1500),
+      setTimeout(() => setActiveStep(1), 1200),
       setTimeout(() => setActiveStep(2), 2500),
     ];
 

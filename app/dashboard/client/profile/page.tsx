@@ -70,7 +70,7 @@ function ClientProfileContent() {
       // Reload the page after a short delay to refresh user data
       setTimeout(() => {
         window.location.reload();
-      }, 1500);
+      }, 1200);
     } catch (err: any) {
       console.error('Update error:', err);
       setError(err.message || 'Failed to update profile');
