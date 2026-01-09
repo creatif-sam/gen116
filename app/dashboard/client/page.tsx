@@ -1,35 +1,62 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/app/contexts/AuthContext';
 import AuthGuard from '@/app/components/AuthGuard';
 import DashboardSidebar from '@/app/components/DashboardSidebar';
 import Breadcrumb from '@/app/components/Breadcrumb';
+import { getClientRequests, getClientStats } from '@/lib/portfolio-api';
 
 function ClientDashboardContent() {
   const router = useRouter();
   const { user, logout } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
+  const [stats, setStats] = useState([
+    { label: 'Active Requests', value: '0', icon: '📋', color: 'from-purple-600 to-blue-600' },
+    { label: 'Completed', value: '0', icon: '✅', color: 'from-green-600 to-emerald-600' },
+    { label: 'Pending', value: '0', icon: '⏳', color: 'from-yellow-600 to-orange-600' },
+    { label: 'Total Projects', value: '0', icon: '📊', color: 'from-blue-600 to-cyan-600' },
+  ]);
+  const [recentRequests, setRecentRequests] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      if (!user?.id) return;
+
+      try {
+        // Fetch client stats
+        const { data: statsData, error: statsError } = await getClientStats(user.id);
+        if (!statsError && statsData) {
+          setStats([
+            { label: 'Active Requests', value: statsData['in-progress'].toString(), icon: '📋', color: 'from-purple-600 to-blue-600' },
+            { label: 'Completed', value: statsData.completed.toString(), icon: '✅', color: 'from-green-600 to-emerald-600' },
+            { label: 'Pending', value: statsData.pending.toString(), icon: '⏳', color: 'from-yellow-600 to-orange-600' },
+            { label: 'Total Projects', value: statsData.total.toString(), icon: '📊', color: 'from-blue-600 to-cyan-600' },
+          ]);
+        }
+
+        // Fetch recent requests
+        const { data: requestsData, error: requestsError } = await getClientRequests(user.id, 5);
+        if (!requestsError && requestsData) {
+          setRecentRequests(requestsData);
+        }
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, [user?.id]);
 
   const handleLogout = async () => {
     await logout();
     router.push('/auth/login');
   };
-
-  const stats = [
-    { label: 'Active Requests', value: '3', icon: '📋', color: 'from-purple-600 to-blue-600' },
-    { label: 'Completed', value: '10+', icon: '✅', color: 'from-green-600 to-emerald-600' },
-    { label: 'Pending', value: '2', icon: '⏳', color: 'from-yellow-600 to-orange-600' },
-    { label: 'Total Projects', value: '15+', icon: '📊', color: 'from-blue-600 to-cyan-600' },
-  ];
-
-  const recentRequests = [
-    { id: '1', title: 'Website Redesign', status: 'in-progress', priority: 'high', date: '2026-01-05' },
-    { id: '2', title: 'Mobile App Development', status: 'pending', priority: 'urgent', date: '2026-01-04' },
-    { id: '3', title: 'Logo Design', status: 'completed', priority: 'medium', date: '2026-01-03' },
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0520] via-[#1a1040] to-[#0a0520] flex">
@@ -39,7 +66,7 @@ function ClientDashboardContent() {
       <div className="flex-1 lg:ml-64 p-4 lg:p-8">
         {/* Welcome Section */}
         <div className="mb-8 mt-16 lg:mt-0">
-          <h2 className="text-3xl font-bold text-white mb-2">Welcome Back! 👋</h2>
+          <h2 className="text-3xl font-bold text-white mb-2">Welcome Back, {user?.name || user?.email || 'Client'}! 👋</h2>
           <p className="text-gray-400">Manage your projects and submit new requests</p>
         </div>
 
@@ -53,7 +80,13 @@ function ClientDashboardContent() {
                 </div>
               </div>
               <p className="text-gray-400 text-sm mb-1">{stat.label}</p>
-              <p className="text-3xl font-bold text-white">{stat.value}</p>
+              <p className="text-3xl font-bold text-white">
+                {loading ? (
+                  <span className="inline-block animate-pulse bg-gray-600 h-8 w-16 rounded"></span>
+                ) : (
+                  stat.value
+                )}
+              </p>
             </div>
           ))}
         </div>
@@ -74,30 +107,49 @@ function ClientDashboardContent() {
               </div>
 
               <div className="space-y-4">
-                {recentRequests.map((request) => (
-                  <div key={request.id} className="bg-purple-900/20 rounded-lg p-4 border border-purple-500/10 hover:border-purple-500/30 transition-all">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-white font-semibold">{request.title}</h4>
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        request.status === 'completed' ? 'bg-green-600/20 text-green-400' :
-                        request.status === 'in-progress' ? 'bg-blue-600/20 text-blue-400' :
-                        'bg-yellow-600/20 text-yellow-400'
-                      }`}>
-                        {request.status}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-4 text-sm text-gray-400">
-                      <span className={`px-2 py-1 rounded ${
-                        request.priority === 'urgent' ? 'bg-red-600/20 text-red-400' :
-                        request.priority === 'high' ? 'bg-orange-600/20 text-orange-400' :
-                        'bg-gray-600/20 text-gray-400'
-                      }`}>
-                        {request.priority}
-                      </span>
-                      <span>📅 {request.date}</span>
-                    </div>
+                {loading ? (
+                  <div className="text-center py-8">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500 mx-auto"></div>
+                    <p className="text-gray-400 mt-2">Loading requests...</p>
                   </div>
-                ))}
+                ) : recentRequests.length === 0 ? (
+                  <div className="text-center py-8">
+                    <p className="text-gray-400">No requests found</p>
+                    <Link
+                      href="/dashboard/client/submit-request"
+                      className="text-purple-400 hover:text-purple-300 text-sm mt-2 inline-block"
+                    >
+                      Submit your first request →
+                    </Link>
+                  </div>
+                ) : (
+                  recentRequests.map((request) => (
+                    <div key={request.id} className="bg-purple-900/20 rounded-lg p-4 border border-purple-500/10 hover:border-purple-500/30 transition-all">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="text-white font-semibold">{request.title}</h4>
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          request.status === 'completed' ? 'bg-green-600/20 text-green-400' :
+                          request.status === 'in-progress' ? 'bg-blue-600/20 text-blue-400' :
+                          request.status === 'rejected' ? 'bg-red-600/20 text-red-400' :
+                          'bg-yellow-600/20 text-yellow-400'
+                        }`}>
+                          {request.status.replace('-', ' ')}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-4 text-sm text-gray-400">
+                        <span className={`px-2 py-1 rounded ${
+                          request.priority === 'urgent' ? 'bg-red-600/20 text-red-400' :
+                          request.priority === 'high' ? 'bg-orange-600/20 text-orange-400' :
+                          request.priority === 'medium' ? 'bg-yellow-600/20 text-yellow-400' :
+                          'bg-gray-600/20 text-gray-400'
+                        }`}>
+                          {request.priority}
+                        </span>
+                        <span>📅 {new Date(request.created_at).toLocaleDateString()}</span>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </div>

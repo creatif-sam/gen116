@@ -26,12 +26,14 @@ export default function DashboardSidebar() {
   const adminNavItems = [
     { name: 'Dashboard', href: '/dashboard/admin', icon: '📊' },
     { name: 'Portfolio Manager', href: '/dashboard/admin/portfolio', icon: '💼' },
-    { name: 'Activity Logs', href: '/dashboard/admin/activity-logs', icon: '📝' },
+    { name: 'Blog Manager', href: '/dashboard/admin/blog', icon: '📝' },
+    { name: 'Activity Logs', href: '/dashboard/admin/activity-logs', icon: '�' },
     { name: 'Users', href: '/dashboard/admin/users', icon: '👥' },
   ];
 
   const staffNavItems = [
     { name: 'Dashboard', href: '/dashboard/staff', icon: '📊' },
+    { name: 'Blog', href: '/dashboard/staff/blog', icon: '📝' },
     { name: 'My Tasks', href: '/dashboard/staff/tasks', icon: '📋' },
     { name: 'Clients', href: '/dashboard/staff/clients', icon: '👥' },
     { name: 'Profile', href: '/dashboard/staff/profile', icon: '👤' },

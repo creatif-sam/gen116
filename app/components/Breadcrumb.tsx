@@ -20,9 +20,12 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
     if (items) return items;
 
     const paths = pathname.split('/').filter(Boolean);
-    const breadcrumbs: BreadcrumbItem[] = [
-      { label: 'Home', href: '/' }
-    ];
+    const breadcrumbs: BreadcrumbItem[] = [];
+
+    // Don't add "Home" for dashboard routes
+    if (!pathname.startsWith('/dashboard')) {
+      breadcrumbs.push({ label: 'Home', href: '/' });
+    }
 
     let currentPath = '';
     paths.forEach((path, index) => {

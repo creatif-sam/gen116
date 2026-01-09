@@ -7,11 +7,14 @@ import { useAuth } from '@/app/contexts/AuthContext';
 import AuthGuard from '@/app/components/AuthGuard';
 import DashboardSidebar from '@/app/components/DashboardSidebar';
 import Breadcrumb from '@/app/components/Breadcrumb';
+import { createRequest } from '@/lib/portfolio-api';
 
 function SubmitRequestContent() {
   const router = useRouter();
   const { user } = useAuth();
   const [files, setFiles] = useState<File[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -27,11 +30,36 @@ function SubmitRequestContent() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Request submitted:', formData, files);
-    alert('Request submitted successfully!');
-    router.push('/dashboard/client');
+    setLoading(true);
+    setError('');
+
+    try {
+      const requestData = {
+        title: formData.title,
+        description: formData.description,
+        category: formData.category,
+        priority: formData.priority as 'low' | 'medium' | 'high' | 'urgent',
+        budget: formData.budget || undefined,
+        deadline: formData.deadline || undefined,
+      };
+
+      const { data, error: apiError } = await createRequest(requestData);
+
+      if (apiError) {
+        throw new Error(apiError.message || 'Failed to submit request');
+      }
+
+      // Success - redirect to dashboard
+      alert('Request submitted successfully!');
+      router.push('/dashboard/client');
+    } catch (err: any) {
+      console.error('Error submitting request:', err);
+      setError(err.message || 'Failed to submit request. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const categories = [
@@ -69,6 +97,11 @@ function SubmitRequestContent() {
 
         <div className="max-w-4xl">
         <div className="bg-gradient-to-br from-purple-900/30 to-blue-900/30 backdrop-blur-lg rounded-2xl p-8 border border-purple-500/20">
+          {error && (
+            <div className="mb-6 p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+              <p className="text-red-400 text-sm">{error}</p>
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Title */}
             <div>
@@ -219,9 +252,17 @@ function SubmitRequestContent() {
             <div className="flex gap-4 pt-4">
               <button
                 type="submit"
-                className="flex-1 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg font-semibold text-lg hover:shadow-xl hover:shadow-purple-500/30 transition-all hover:scale-105"
+                disabled={loading}
+                className="flex-1 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg font-semibold text-lg hover:shadow-xl hover:shadow-purple-500/30 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
               >
-                Submit Request
+                {loading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    Submitting...
+                  </>
+                ) : (
+                  'Submit Request'
+                )}
               </button>
               <Link
                 href="/dashboard/client"

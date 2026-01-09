@@ -396,3 +396,206 @@ export async function getActivityLogsByEntity(entityType: string, entityId: stri
     return { data: null, error };
   }
 }
+
+// Request Management Functions
+export async function getClientRequests(clientId: string, limit = 10) {
+  try {
+    // First get the profile ID from the auth ID
+    let { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('auth_id', clientId)
+      .single();
+
+    // If profile doesn't exist, try to create it
+    if (profileError || !profile) {
+      console.log('Profile not found for auth ID:', clientId, 'Attempting to create profile...');
+
+      // Get user info from auth
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+
+      if (authUser) {
+        // Create the missing profile
+        const { data: newProfile, error: createError } = await supabase
+          .from('profiles')
+          .insert({
+            auth_id: clientId,
+            email: authUser.email || '',
+            name: authUser.user_metadata?.name || authUser.email?.split('@')[0] || 'User',
+            role: authUser.user_metadata?.role || 'client',
+          })
+          .select('id')
+          .single();
+
+        if (!createError && newProfile) {
+          console.log('Profile created successfully:', newProfile.id);
+          profile = newProfile;
+        } else {
+          console.error('Failed to create profile:', createError);
+          return { data: [], error: null };
+        }
+      } else {
+        console.error('No authenticated user found');
+        return { data: [], error: null };
+      }
+    }
+
+    const { data, error } = await supabase
+      .from('requests')
+      .select(`
+        *,
+        assigned_user:assigned_to (
+          full_name,
+          email
+        )
+      `)
+      .eq('client_id', profile.id)
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+    return { data, error: null };
+  } catch (error: any) {
+    return { data: null, error };
+  }
+}
+
+export async function getClientStats(clientId: string) {
+  try {
+    // First get the profile ID from the auth ID
+    let { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('auth_id', clientId)
+      .single();
+
+    // If profile doesn't exist, try to create it
+    if (profileError || !profile) {
+      console.log('Profile not found for auth ID:', clientId, 'Attempting to create profile...');
+
+      // Get user info from auth
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+
+      if (authUser) {
+        // Create the missing profile
+        const { data: newProfile, error: createError } = await supabase
+          .from('profiles')
+          .insert({
+            auth_id: clientId,
+            email: authUser.email || '',
+            name: authUser.user_metadata?.name || authUser.email?.split('@')[0] || 'User',
+            role: authUser.user_metadata?.role || 'client',
+          })
+          .select('id')
+          .single();
+
+        if (!createError && newProfile) {
+          console.log('Profile created successfully:', newProfile.id);
+          profile = newProfile;
+        } else {
+          console.error('Failed to create profile:', createError);
+          return { data: { total: 0, pending: 0, 'in-progress': 0, completed: 0, rejected: 0 }, error: null };
+        }
+      } else {
+        console.error('No authenticated user found');
+        return { data: { total: 0, pending: 0, 'in-progress': 0, completed: 0, rejected: 0 }, error: null };
+      }
+    }
+
+    const { data, error } = await supabase
+      .from('requests')
+      .select('status')
+      .eq('client_id', profile.id);
+
+    if (error) throw error;
+
+    // Count requests by status
+    const stats = {
+      total: data.length,
+      pending: data.filter(r => r.status === 'pending').length,
+      'in-progress': data.filter(r => r.status === 'in-progress').length,
+      completed: data.filter(r => r.status === 'completed').length,
+      rejected: data.filter(r => r.status === 'rejected').length,
+    };
+
+    return { data: stats, error: null };
+  } catch (error: any) {
+    return { data: null, error };
+  }
+}
+
+export async function createRequest(requestData: {
+  title: string;
+  description: string;
+  category: string;
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  budget?: string;
+  deadline?: string;
+}) {
+  try {
+    // Get the current authenticated user to verify authentication
+    const { data: { user: authUser } } = await supabase.auth.getUser();
+
+    if (!authUser) throw new Error('User not authenticated');
+
+    // Get the profile for the current user to use the profile ID as client_id
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('auth_id', authUser.id)
+      .single();
+
+    if (profileError || !profile) {
+      throw new Error('User profile not found');
+    }
+
+    const { data, error } = await supabase
+      .from('requests')
+      .insert({
+        ...requestData,
+        client_id: profile.id, // Use profile ID, not auth ID
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    // Log activity
+    await logActivity('create', 'request', data.id, requestData.title);
+
+    return { data, error: null };
+  } catch (error: any) {
+    return { data: null, error };
+  }
+}
+
+export async function updateRequestStatus(requestId: string, status: 'pending' | 'in-progress' | 'completed' | 'rejected', progress?: number) {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    const updateData: any = {
+      status,
+      updated_at: new Date().toISOString(),
+    };
+
+    if (progress !== undefined) {
+      updateData.progress = progress;
+    }
+
+    const { data, error } = await supabase
+      .from('requests')
+      .update(updateData)
+      .eq('id', requestId)
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    // Log activity
+    await logActivity('update', 'request', requestId, `Status: ${status}`);
+
+    return { data, error: null };
+  } catch (error: any) {
+    return { data: null, error };
+  }
+}

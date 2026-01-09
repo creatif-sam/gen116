@@ -1,12 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import Footer from './components/Footer';
+import { useAuth } from './contexts/AuthContext';
 
 export default function Home() {
   const [activeService, setActiveService] = useState<number | null>(null);
+  const { user } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      // Redirect logged-in users to their dashboard
+      if (user.role === 'admin') {
+        router.push('/dashboard/admin');
+      } else if (user.role === 'staff') {
+        router.push('/dashboard/staff');
+      } else {
+        router.push('/dashboard/client');
+      }
+    }
+  }, [user, router]);
 
   const services = [
     {

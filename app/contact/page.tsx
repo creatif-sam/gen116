@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -13,6 +15,21 @@ export default function ContactPage() {
     message: '',
   });
   const [activeStep, setActiveStep] = useState(0);
+  const { user } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      // Redirect logged-in users to their dashboard
+      if (user.role === 'admin') {
+        router.push('/dashboard/admin');
+      } else if (user.role === 'staff') {
+        router.push('/dashboard/staff');
+      } else {
+        router.push('/dashboard/client');
+      }
+    }
+  }, [user, router]);
 
   useEffect(() => {
     // Sequential animation - each step activates after the previous

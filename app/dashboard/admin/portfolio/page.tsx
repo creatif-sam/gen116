@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/app/contexts/AuthContext';
+import DashboardSidebar from '@/app/components/DashboardSidebar';
 import LoadingSpinner from '@/app/components/LoadingSpinner';
 import { getProjects, getCaseStudies, getPortfolioStats, getActivityLogs } from '@/lib/portfolio-api';
 
@@ -19,36 +20,33 @@ export default function PortfolioDashboardPage() {
   }, []);
 
   const loadDashboardData = async () => {
-    // Load stats
-    const { data: statsData } = await getPortfolioStats();
-    if (statsData) {
-      setStats(statsData);
-    }
+    // Fetch all dashboard data in parallel
+    const [statsRes, projectsRes, caseStudiesRes, activityRes] = await Promise.all([
+      getPortfolioStats(),
+      getProjects(true),
+      getCaseStudies(true),
+      getActivityLogs(10)
+    ]);
 
-    // Load projects count
-    const { data: projectsData } = await getProjects(true);
-    if (projectsData) {
+    if (statsRes.data) {
+      setStats(statsRes.data);
+    }
+    if (projectsRes.data) {
       setProjectsCount({
-        total: projectsData.length,
-        published: projectsData.filter((p: any) => p.published).length,
-        drafts: projectsData.filter((p: any) => !p.published).length,
+        total: projectsRes.data.length,
+        published: projectsRes.data.filter((p: any) => p.published).length,
+        drafts: projectsRes.data.filter((p: any) => !p.published).length,
       });
     }
-
-    // Load case studies count
-    const { data: caseStudiesData } = await getCaseStudies(true);
-    if (caseStudiesData) {
+    if (caseStudiesRes.data) {
       setCaseStudiesCount({
-        total: caseStudiesData.length,
-        published: caseStudiesData.filter((cs: any) => cs.published).length,
-        drafts: caseStudiesData.filter((cs: any) => !cs.published).length,
+        total: caseStudiesRes.data.length,
+        published: caseStudiesRes.data.filter((cs: any) => cs.published).length,
+        drafts: caseStudiesRes.data.filter((cs: any) => !cs.published).length,
       });
     }
-
-    // Load recent activity
-    const { data: activityData } = await getActivityLogs(10);
-    if (activityData) {
-      setRecentActivity(activityData);
+    if (activityRes.data) {
+      setRecentActivity(activityRes.data);
     }
 
     setLoading(false);
@@ -66,8 +64,17 @@ export default function PortfolioDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[var(--background)] flex">
+      <DashboardSidebar />
+      <div className="flex-1 max-w-7xl mx-auto px-8 py-6 md:ml-64">
+        {/* Breadcrumbs */}
+        <div className="mb-4">
+          <nav className="text-sm text-gray-400 flex items-center gap-2">
+            <Link href="/dashboard/admin" className="hover:text-purple-400">Admin Dashboard</Link>
+            <span>/</span>
+            <span className="text-purple-400">Portfolio</span>
+          </nav>
+        </div>
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-2">

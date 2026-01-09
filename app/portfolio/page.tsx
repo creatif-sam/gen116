@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useAuth } from '../contexts/AuthContext';
 import { getProjects, getCaseStudies, getPortfolioStats } from '../../lib/portfolio-api';
 
 export default function PortfolioPage() {
@@ -16,6 +18,21 @@ export default function PortfolioPage() {
   ]);
   const [projects, setProjects] = useState<any[]>([]);
   const [caseStudies, setCaseStudies] = useState<any[]>([]);
+  const { user } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      // Redirect logged-in users to their dashboard
+      if (user.role === 'admin') {
+        router.push('/dashboard/admin');
+      } else if (user.role === 'staff') {
+        router.push('/dashboard/staff');
+      } else {
+        router.push('/dashboard/client');
+      }
+    }
+  }, [user, router]);
 
   useEffect(() => {
     setIsVisible(true);

@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/app/contexts/AuthContext';
 import LoadingSpinner from '@/app/components/LoadingSpinner';
+import Breadcrumb from '@/app/components/Breadcrumb';
+import DashboardSidebar from '@/app/components/DashboardSidebar';
 import { getActivityLogs } from '@/lib/portfolio-api';
 
 interface ActivityLog {
@@ -34,7 +36,7 @@ export default function AdminActivityLogsPage() {
   const loadLogs = async () => {
     setLoading(true);
     const entityType = filter === 'all' ? undefined : filter;
-    const { data, error } = await getActivityLogs(100, entityType);
+    const { data, error } = await getActivityLogs(50, entityType);
     if (data) {
       setLogs(data);
     }
@@ -84,10 +86,14 @@ export default function AdminActivityLogsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
+    <div className="min-h-screen bg-[var(--background)] flex">
+      <DashboardSidebar />
+      <div className="flex-1 p-6 lg:ml-64">
+        <div className="max-w-5xl mx-auto">
+          {/* Breadcrumb */}
+          <Breadcrumb />
+          {/* Header */}
+          <div className="mb-8 flex items-center justify-between">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-2">
             Activity Logs
           </h1>
@@ -146,24 +152,13 @@ export default function AdminActivityLogsPage() {
             <p className="text-gray-400 text-lg">No activity logs found</p>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {logs.map((log) => (
-              <div
-                key={log.id}
-                className="p-5 bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-xl border border-purple-500/20 hover:border-purple-500/40 transition-all"
-              >
-                <div className="flex items-start gap-4">
-                  {/* Icon */}
-                  <div className="flex-shrink-0">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
-                      {getEntityIcon(log.entity_type)}
-                    </div>
-                  </div>
-
-                  {/* Content */}
+              <div key={log.id} className="p-6 bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-2xl border border-purple-500/20">
+                <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getActionColor(log.action)}`}>
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-xs font-semibold text-white">
                         {getActionIcon(log.action)} {log.action.toUpperCase()}
                       </span>
                       <span className="px-3 py-1 bg-purple-900/40 rounded-full text-xs text-purple-300">
@@ -232,14 +227,16 @@ export default function AdminActivityLogsPage() {
               </div>
               <div className="text-sm text-gray-400">Published</div>
             </div>
-            <div className="p-4 bg-yellow-900/20 rounded-xl border border-yellow-500/20 text-center">
-              <div className="text-2xl font-bold text-yellow-400">
-                {logs.filter(l => l.action === 'unpublish').length}
-              </div>
-              <div className="text-sm text-gray-400">Unpublished</div>
-            </div>
-          </div>
-        )}
+			<div className="p-4 bg-yellow-900/20 rounded-xl border border-yellow-500/20 text-center">
+				<div className="text-2xl font-bold text-yellow-400">
+					{logs.filter(l => l.action === 'unpublish').length}
+				</div>
+				<div className="text-sm text-gray-400">Unpublished</div>
+			</div>
+		</div>
+	)
+}
+        </div>
       </div>
     </div>
   );

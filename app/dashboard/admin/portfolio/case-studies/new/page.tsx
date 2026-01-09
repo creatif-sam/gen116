@@ -203,10 +203,31 @@ export default function CaseStudyEditorPage() {
                     name="slug"
                     value={formData.slug}
                     onChange={handleChange}
+                    className="w-full px-4 py-3 bg-purple-900/30 border border-purple-500/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    placeholder="case-study-slug"
                     required
-                    pattern="[a-z0-9-]+"
-                    placeholder="healthcare-digital-transformation"
-                    className="w-full px-4 py-3 bg-black/40 border border-purple-500/20 rounded-lg text-white focus:border-purple-500/40 focus:outline-none"
+                  />
+                </div>
+                {/* Breadcrumb */}
+                <Breadcrumb 
+                  items={[
+                    { label: 'Dashboard', href: '/dashboard/admin' },
+                    { label: 'Portfolio', href: '/dashboard/admin/portfolio' },
+                    { label: 'Case Studies', href: '/dashboard/admin/portfolio/case-studies' },
+                    { label: isNew ? 'New Case Study' : 'Edit Case Study' }
+                  ]} 
+                />
+
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-gray-300">Slug * (URL-friendly)</label>
+                  <input
+                    type="text"
+                    name="slug"
+                    value={formData.slug}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-purple-900/30 border border-purple-500/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    placeholder="case-study-slug"
+                    required
                   />
                 </div>
 

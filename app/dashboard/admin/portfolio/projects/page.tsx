@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/app/contexts/AuthContext';
 import LoadingSpinner from '@/app/components/LoadingSpinner';
+import Breadcrumb from '@/app/components/Breadcrumb';
 import { getProjects, deleteProject, toggleProjectPublish } from '@/lib/portfolio-api';
 
 interface Project {
@@ -75,9 +76,11 @@ export default function AdminProjectsPage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)] p-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-5xl mx-auto">
+        {/* Breadcrumb */}
+        <Breadcrumb />
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-8 flex items-center justify-between">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-2">
