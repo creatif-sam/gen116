@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useAuth } from '@/app/contexts/AuthContext';
-import AuthGuard from '@/app/components/AuthGuard';
+import { useAuth } from '@/app/pages/contexts/AuthContext';
+import AuthGuard from '@/app/pages/components/AuthGuard';
 import { supabase } from '@/lib/supabase';
 
 function ClientProfileContent() {

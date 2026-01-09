@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Navbar from '@/app/components/Navbar';
-import Footer from '@/app/components/Footer';
-import { useAuth } from '@/app/contexts/AuthContext';
-import { UserRole } from '@/app/types/user';
+import Navbar from '@/app/pages/components/Navbar';
+import Footer from '@/app/pages/components/Footer';
+import { useAuth } from '@/app/pages/contexts/AuthContext';
+import { UserRole } from '@/app/pages/types/user';
 
 export default function RegisterPage() {
   const router = useRouter();
